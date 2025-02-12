@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from glob import glob
 import time
+import constants as c
 
 data_base = []
 data_normalized = []
@@ -15,18 +16,6 @@ for file in glob("../CV Light/TiO2_24_CV_Light(*)",root_dir="."):
     data_base.append(iv_ch) # Append all dataset
     data_normalized.append(iv_normalized)
 
-# Plot using a color gradient
-colors=(
-    "#003f5c",
-    "#58508d",
-    "#8a508f",
-    "#bc5090",
-    "#de5a79",
-    "#ff6361",
-    "#ff8531",
-    "#ffa600"
-)
-
 
 #General plots
 i=0
@@ -35,7 +24,7 @@ for set in data_base:
     if 8<=r<=15:
         r=7-(r%8)
 
-    plt.plot(set["x"],set["y"],color=colors[r],ls="dotted")
+    plt.plot(set["x"],set["y"],color=c.colors[r],ls="dotted")
 
     i=i+1
 

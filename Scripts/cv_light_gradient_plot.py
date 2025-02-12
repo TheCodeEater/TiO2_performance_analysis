@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from glob import glob
 import time
+import constants as c
 
 data_base = []
 data_normalized = []
@@ -15,17 +16,6 @@ for file in glob("../CV Light/TiO2_24_CV_Light(*)",root_dir="."):
     data_base.append(iv_ch) # Append all dataset
     data_normalized.append(iv_normalized)
 
-# Plot using a color gradient
-colors=(
-    "#003f5c",
-    "#58508d",
-    "#8a508f",
-    "#bc5090",
-    "#de5a79",
-    "#ff6361",
-    "#ff8531",
-    "#ffa600"
-)
 
 #Plots
 figure, ax = plt.subplots(nrows=2,ncols=4,figsize=(30,15)) #Plot data along cols (contains 8 plots, one for each row of the col assigned to the plot)
@@ -42,7 +32,7 @@ for col in range(0,8): #for each column
 
     i=0
     for row in column: #for each row, plot according to colors
-        plots[col].plot(row["x"],row["y"],color=colors[i])
+        plots[col].plot(row["x"],row["y"],color=c.colors[i])
         plots[col].set(xlabel="Potential (V)",ylabel="Current (A)",title="Column {}".format(col+1))
         i=i+1
 
