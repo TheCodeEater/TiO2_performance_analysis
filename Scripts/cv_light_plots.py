@@ -20,11 +20,11 @@ for file in glob("../CV Light/TiO2_24_CV_Light(*)",root_dir="."):
 #General plots
 i=0
 for set in data_base:
-    r=i%8
+    r=i%16
     if 8<=r<=15:
         r=7-(r%8)
 
-    plt.plot(set["x"],set["y"],color=c.colors[r],ls="dotted")
+    plt.plot(set["x"],set["y"],color=c.colors[r],ls="dotted")#,label="Riga {}".format(r+1))
 
     i=i+1
 
