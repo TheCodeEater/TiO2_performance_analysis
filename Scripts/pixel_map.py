@@ -15,28 +15,15 @@ light_dataset = []
 
 junk = []
 
-filenames=glob("../CV Light/TiO2_24_CV_Light(*)",root_dir=".")
-
-def get_number(file):
-    #For each file, match position and put in the list
-    pos=re.search(r"\((\d+)\)",file)
-    pos=int(pos.group(1))
-    return pos
-
-
-fnames=sorted(filenames,key=get_number)
-
-print(fnames)
-
 #Load light current density data
-for file in fnames:
+for file in proc.get_sorted_filenames("../CV Light/TiO2_24_CV_Light(*)"):
     junk, junk, voltage, current_density=np.loadtxt(file,skiprows=1,unpack=True)
 
     iv={"x":voltage,"y":current_density}
     light_dataset.append(iv)
 
 #Load dark current density data
-for file in glob("../CV Dark/TiO2_24_CV_Dark(*)",root_dir="."):
+for file in proc.get_sorted_filenames("../CV Dark/TiO2_24_CV_Dark(*)"):
     junk, junk, voltage, current_density=np.loadtxt(file,skiprows=1,unpack=True)
 
     iv={"x":voltage,"y":current_density}

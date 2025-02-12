@@ -1,4 +1,6 @@
 import time
+import re
+from glob import glob
 # Assign sequence position to x,y of point
 
 def getxy(linear_position):
@@ -27,3 +29,12 @@ def getlinearpos(x,y):
 
 def current_time():
     return time.strftime("%Y%m%d-%H%M%S")
+
+def get_file_number(file):
+    # For each file, match position and put in the list
+    pos = re.search(r"\((\d+)\)", file)
+    pos = int(pos.group(1))
+    return pos
+def get_sorted_filenames(path):
+    filenames = glob(path, root_dir=".")
+    return sorted(filenames, key=get_file_number)
