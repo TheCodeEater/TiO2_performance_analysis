@@ -28,21 +28,9 @@ colors=(
 )
 
 #Plots
-#matrix=plt.subplot() # Whole matrix subplot
-#rows= [plt.subplot()] * 8 #Plot data along a row (contains 8 plots, one for each col part of the row)
-figure, ax = plt.subplots(nrows=2,ncols=4) #Plot data along cols (contains 8 plots, one for each row of the col assigned to the plot)
-cols=ax.flatten()
+figure, ax = plt.subplots(nrows=2,ncols=4,figsize=(30,15)) #Plot data along cols (contains 8 plots, one for each row of the col assigned to the plot)
+plots=ax.flatten()
 
-#General plots
-#i=0
-#for set in data_base:
-  #  r=i%8
-  #  if 8<=r<=15:
-  #      r=7-(r%8)
-
-  #  matrix.plot(set["x"],set["y"],color=colors[r],ls="dotted")
-
- #   i=i+1
 
 # Col plots
 for col in range(0,8): #for each column
@@ -54,7 +42,8 @@ for col in range(0,8): #for each column
 
     i=0
     for row in column: #for each row, plot according to colors
-        cols[col].plot(row["x"],row["y"],color=colors[i])
+        plots[col].plot(row["x"],row["y"],color=colors[i])
+        plots[col].set(xlabel="Potential (V)",ylabel="Current (A)",title="Column {}".format(col+1))
         i=i+1
 
 
