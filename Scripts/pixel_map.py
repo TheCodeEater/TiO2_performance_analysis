@@ -3,6 +3,7 @@ import numpy as np
 import constants as c
 from glob import glob
 import procedures as proc
+import re
 
 #Set target potential
 target_potential=1.2
@@ -14,8 +15,21 @@ light_dataset = []
 
 junk = []
 
+filenames=glob("../CV Light/TiO2_24_CV_Light(*)",root_dir=".")
+
+def get_number(file):
+    #For each file, match position and put in the list
+    pos=re.search(r"\((\d+)\)",file)
+    pos=int(pos.group(1))
+    return pos
+
+
+fnames=sorted(filenames,key=get_number)
+
+print(fnames)
+
 #Load light current density data
-for file in glob("../CV Light/TiO2_24_CV_Light(*)",root_dir="."):
+for file in fnames:
     junk, junk, voltage, current_density=np.loadtxt(file,skiprows=1,unpack=True)
 
     iv={"x":voltage,"y":current_density}
