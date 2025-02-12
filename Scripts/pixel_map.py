@@ -1,7 +1,11 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import constants as c
 from glob import glob
 import procedures as proc
+
+#Set target potential
+target_potential=1
 
 #Load data - Both light and dark
 #IV curve for each potential
@@ -28,7 +32,10 @@ for file in glob("../CV Dark/TiO2_24_CV_Dark(*)",root_dir="."):
 # Use normalized data
 
 #Find potential - temporarily hard-coded
-index=40
+potential_array=light_dataset[0]["x"]
+
+index=np.argmin(np.abs(potential_array - target_potential)) #index of the wanted potential in the dataset
+
 
 count=0
 cd_mat = np.zeros((8,8))
@@ -55,6 +62,16 @@ for light,dark in zip(light_dataset,dark_dataset):
 #Scale
 cd_mat=cd_mat/max_cd
 
-print(cd_mat)
+#print(cd_mat)
 
 # Create image
+
+pixel_plot=plt.Figure()
+#pixel_plot.add_axes()
+pixel_plot=plt.imshow(
+  cd_mat, cmap='gnuplot', interpolation='nearest')
+
+plt.title("Current density map at {} V cell potential".format(target_potential))
+plt.show()
+
+plt.savefig("../Artifacts/current_density_maps/CD_{}.png".format(proc.current_time()))
