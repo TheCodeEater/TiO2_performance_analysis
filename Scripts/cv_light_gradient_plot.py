@@ -32,14 +32,17 @@ for col in range(0,8): #for each column
 
     i=0
     for row in column: #for each row, plot according to colors
-        plots[col].plot(row["x"],row["y"],color=c.colors[i])
-        plots[col].set(xlabel="Potential (V)",ylabel="Current (A)",title="Column {}".format(col+1))
+        plots[col].plot(row["x"],row["y"],color=c.colors[i],label="Riga {}".format(i+1))
         i=i+1
+
+    plots[col].set(xlabel="Potential (V)", ylabel="Current (A)", title="Column {}".format(col + 1))
+    plots[col].legend()
 
 
 #Drawing
 #matrix.legend()
 #matrix.set(xlabel="Potential (V)",ylabel="WE Current(A)")
+plt.legend()
 plt.savefig("../Artifacts/CV_Light_"+time.strftime("%Y%m%d-%H%M%S")+".png")
 plt.show()
 
