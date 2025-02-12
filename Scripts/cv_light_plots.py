@@ -27,10 +27,6 @@ colors=(
     "#ffa600"
 )
 
-#Plots
-matrix=plt.subplot() # Whole matrix subplot
-rows= [plt.subplot()] * 8 #Plot data along a row (contains 8 plots, one for each col part of the row)
-cols= [plt.subplot()] * 8 #Plot data along cols (contains 8 plots, one for each row of the col assigned to the plot)
 
 #General plots
 i=0
@@ -39,15 +35,17 @@ for set in data_base:
     if 8<=r<=15:
         r=7-(r%8)
 
-    matrix.plot(set["x"],set["y"],color=colors[r],ls="dotted")
+    plt.plot(set["x"],set["y"],color=colors[r],ls="dotted")
 
     i=i+1
 
 
 
+
 #Drawing
-matrix.legend()
-matrix.set(xlabel="Potential (V)",ylabel="WE Current(A)")
+plt.legend()
+plt.xlabel("Potential (V)")
+plt.ylabel("WE Current(A)")
 plt.savefig("../Artifacts/CV_Light_"+time.strftime("%Y%m%d-%H%M%S")+".png")
 plt.show()
 
