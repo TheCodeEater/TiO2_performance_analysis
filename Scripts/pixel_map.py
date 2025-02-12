@@ -32,6 +32,7 @@ index=40
 
 count=0
 cd_mat = np.zeros((8,8))
+max_cd=-99999
 
 for light,dark in zip(light_dataset,dark_dataset):
     current_light=light["y"][index]
@@ -40,18 +41,20 @@ for light,dark in zip(light_dataset,dark_dataset):
     #Compute current density difference. this is the photocurrent
     photocurrent=current_light-current_dark
 
+    #Compute maximum value
+    if(photocurrent>max_cd):
+        max_cd=photocurrent
+
     #Arrange data in a matrix
     pos=proc.getxy(count)
     cd_mat[pos]=photocurrent
 
     count+=1
 
-print(cd_mat)
-
-
-
-
-
 # Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
+#Scale
+cd_mat=cd_mat/max_cd
+
+print(cd_mat)
 
 # Create image
