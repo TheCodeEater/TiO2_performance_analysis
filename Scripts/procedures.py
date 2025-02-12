@@ -1,4 +1,4 @@
-
+import time
 # Assign sequence position to x,y of point
 
 def getxy(linear_position):
@@ -12,3 +12,6 @@ def getxy(linear_position):
         y=r
 
     return (x,y)
+
+def current_time():
+    return time.strftime("%Y%m%d-%H%M%S")
