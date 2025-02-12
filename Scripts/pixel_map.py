@@ -5,7 +5,7 @@ from glob import glob
 import procedures as proc
 
 #Set target potential
-target_potential=1
+target_potential=1.2
 
 #Load data - Both light and dark
 #IV curve for each potential
@@ -62,7 +62,7 @@ pixel_plot=plt.imshow(
   cd_mat, cmap='gnuplot', interpolation='nearest')
 
 plt.title("Current density map at {} V cell potential".format(target_potential))
-plt.colorbar()
+plt.colorbar(label="mA/$cm^2$")
 
 plt.savefig("../Artifacts/current_density_maps/CD_{}.png".format(proc.current_time()))
 plt.show()
