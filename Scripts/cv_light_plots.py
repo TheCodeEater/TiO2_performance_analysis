@@ -3,11 +3,12 @@ import matplotlib.pyplot as plt
 from glob import glob
 import time
 import constants as c
+import procedures as proc
 
 data_base = []
 data_normalized = []
 #Load data - multiple datasets
-for file in glob("../CV Light/TiO2_24_CV_Light(*)",root_dir="."):
+for file in proc.get_sorted_filenames("../CV Light/TiO2_24_CV_Light(*)"):
     voltage, we_current, vrhe, specific_current=np.loadtxt(file,skiprows=1,unpack=True)
 
     iv_ch={"x":voltage,"y":we_current}

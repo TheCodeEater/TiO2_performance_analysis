@@ -6,7 +6,7 @@ import procedures as proc
 import re
 
 #Set target potential
-target_potential=1.2
+target_potential=1.1
 
 #Load data - Both light and dark
 #IV curve for each potential
