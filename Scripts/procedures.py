@@ -1,6 +1,8 @@
 import time
 import re
 from glob import glob
+import numpy as np
+import scipy as scp
 # Assign sequence position to x,y of point
 
 def getxy(linear_position):
@@ -38,3 +40,6 @@ def get_file_number(file):
 def get_sorted_filenames(path):
     filenames = glob(path, root_dir=".")
     return sorted(filenames, key=get_file_number)
+
+def reject_outliers(data, m=2):
+    return scp.ndimage.median_filter(data,m)
