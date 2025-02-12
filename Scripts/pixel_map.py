@@ -31,8 +31,13 @@ for file in glob("../CV Dark/TiO2_24_CV_Dark(*)",root_dir="."):
 #For each point, at a fixed potential, compute difference for both maximum and minimum
 # Use normalized data
 
-#Find potential - temporarily hard-coded
+#Find potential - copy one array
 potential_array=light_dataset[0]["x"]
+#Remove reversing voltage part
+#Get maximum potential value index
+max_potential_index=np.argmax(potential_array)
+#Trim the array
+potential_array[:max_potential_index]
 
 index=np.argmin(np.abs(potential_array - target_potential)) #index of the wanted potential in the dataset
 
@@ -61,7 +66,8 @@ pixel_plot=plt.Figure()
 pixel_plot=plt.imshow(
   cd_mat, cmap='gnuplot', interpolation='nearest')
 
-plt.title("Current density map at {} V cell potential".format(target_potential))
+plt.suptitle("Current density map at {} V cell potential".format(target_potential))
+plt.title("Towards positive voltages")
 plt.colorbar(label="mA/$cm^2$")
 
 plt.savefig("../Artifacts/current_density_maps/CD_{}.png".format(proc.current_time()))
