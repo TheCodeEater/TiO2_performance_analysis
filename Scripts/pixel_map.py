@@ -36,10 +36,8 @@ potential_array=light_dataset[0]["x"]
 
 index=np.argmin(np.abs(potential_array - target_potential)) #index of the wanted potential in the dataset
 
-
 count=0
 cd_mat = np.zeros((8,8))
-max_cd=-99999
 
 for light,dark in zip(light_dataset,dark_dataset):
     current_light=light["y"][index]
@@ -48,9 +46,6 @@ for light,dark in zip(light_dataset,dark_dataset):
     #Compute current density difference. this is the photocurrent
     photocurrent=current_light-current_dark
 
-    #Compute maximum value
-    if(photocurrent>max_cd):
-        max_cd=photocurrent
 
     #Arrange data in a matrix
     pos=proc.getxy(count)
@@ -59,11 +54,6 @@ for light,dark in zip(light_dataset,dark_dataset):
     count+=1
 
 # Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
-#Scale
-cd_mat=cd_mat/max_cd
-
-#print(cd_mat)
-
 # Create image
 
 pixel_plot=plt.Figure()
@@ -72,6 +62,7 @@ pixel_plot=plt.imshow(
   cd_mat, cmap='gnuplot', interpolation='nearest')
 
 plt.title("Current density map at {} V cell potential".format(target_potential))
-plt.show()
+plt.colorbar()
 
 plt.savefig("../Artifacts/current_density_maps/CD_{}.png".format(proc.current_time()))
+plt.show()
