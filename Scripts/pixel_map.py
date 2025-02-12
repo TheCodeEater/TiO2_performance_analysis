@@ -3,8 +3,10 @@ import constants as c
 from glob import glob
 
 #Load data - Both light and dark
+#IV curve for each potential
 dark = []
 light = []
+
 junk = []
 
 #Load light current density data
