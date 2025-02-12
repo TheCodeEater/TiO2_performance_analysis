@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from glob import glob
+import time
 
 data_base = []
 data_normalized = []
@@ -26,11 +27,27 @@ colors=(
     "#ffa600"
 )
 
-for set in data_base:
-    plt.plot(data=set,color="blue")
+#Plots
+matrix=plt.subplot() # Whole matrix subplot
+rows= [plt.subplot()] * 8 #Plot data along a row (contains 8 plots, one for each col part of the row)
+cols= [plt.subplot()] * 8 #Plot data along cols (contains 8 plots, one for each row of the col assigned to the plot)
 
-plt.legend()
-plt.xlabel("V")
-plt.ylabel("I")
+#General plots
+i=0
+for set in data_base:
+    r=i%8
+    if 8<=r<=15:
+        r=7-(r%8)
+
+    matrix.plot(set["x"],set["y"],color=colors[r],ls="dotted")
+
+    i=i+1
+
+
+
+#Drawing
+matrix.legend()
+matrix.set(xlabel="Potential (V)",ylabel="WE Current(A)")
+plt.savefig("../Artifacts/CV_Light_"+time.strftime("%Y%m%d-%H%M%S")+".png")
 plt.show()
 
