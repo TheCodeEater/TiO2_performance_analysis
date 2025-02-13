@@ -5,8 +5,8 @@ from glob import glob
 import procedures as proc
 import re
 
-#Set target potential
-target_potential=1.1
+#Request target potential
+target_potential=float(input("Insert target potential") or 1.1)
 
 #Load data - Both light and dark
 #IV curve for each potential
@@ -16,7 +16,7 @@ light_dataset = []
 junk = []
 
 #Load light current density data
-for file in proc.get_sorted_filenames("../CV Light/TiO2_24_CV_Light(*)"):
+for file in proc.get_sorted_filenames(c.FILEPATH_CV_LIGHT):
     junk, junk, voltage, current_density=np.loadtxt(file,skiprows=1,unpack=True)
 
     current_density = proc.reject_outliers(current_density, 31)
@@ -25,7 +25,7 @@ for file in proc.get_sorted_filenames("../CV Light/TiO2_24_CV_Light(*)"):
     light_dataset.append(iv)
 
 #Load dark current density data
-for file in proc.get_sorted_filenames("../CV Dark/TiO2_24_CV_Dark(*)"):
+for file in proc.get_sorted_filenames(c.FILEPATH_CV_DARK):
     junk, junk, voltage, current_density=np.loadtxt(file,skiprows=1,unpack=True)
 
     current_density = proc.reject_outliers(current_density, 31)
@@ -36,7 +36,7 @@ for file in proc.get_sorted_filenames("../CV Dark/TiO2_24_CV_Dark(*)"):
 #For each point, at a fixed potential, compute difference for both maximum and minimum
 # Use normalized data
 
-#Find potential - copy one array
+#Find requested potential index - copy one array
 potential_array=light_dataset[0]["x"]
 #Remove reversing voltage part
 #Get maximum potential value index
@@ -64,12 +64,15 @@ for light,dark in zip(light_dataset,dark_dataset):
 
     count+=1
 
+#Drawing
+
 # Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
 # Create image
 pixel_plot=plt.Figure()
 
+#Transpose for correct drawing
 cd_mat=np.transpose(cd_mat)
-#pixel_plot.add_axes()
+
 pixel_plot=plt.imshow(
   cd_mat, cmap='gnuplot', interpolation='nearest')
 
