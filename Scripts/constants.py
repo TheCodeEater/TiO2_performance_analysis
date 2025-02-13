@@ -25,6 +25,7 @@ FILEPATH_CV_LIGHT="../CV Light/TiO2_24_CV_Light(*)"
 FILEPATH_CV_DARK="../CV Dark/TiO2_24_CV_Dark(*)"
 FILEPATH_OCP_DARK="../OCP Dark/TiO2_24_OCP_Dark(*)"
 FILEPATH_OCP_LIGHT="../OCP Light/TiO2_24_OCP_Light(*)"
+FILEPATH_EIS_DARK="../EIS Dark/TiO2_24_EIS_Dark(*)"
 
 #Axis limits
 #For row and column gradients
