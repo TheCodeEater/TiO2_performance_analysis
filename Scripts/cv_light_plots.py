@@ -38,6 +38,6 @@ for set in data_base:
 plt.legend()
 plt.xlabel("Potential (V)")
 plt.ylabel("WE Current(A)")
-plt.savefig("../Artifacts/CV_Light_ALL_"+time.strftime("%Y%m%d-%H%M%S")+".png")
+plt.savefig("../Artifacts/cv_light_all/CV_Light_ALL_"+time.strftime("%Y%m%d-%H%M%S")+".png")
 plt.show()
 
