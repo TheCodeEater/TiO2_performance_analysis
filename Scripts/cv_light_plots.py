@@ -7,8 +7,9 @@ import procedures as proc
 
 data_base = []
 data_normalized = []
+
 #Load data - multiple datasets
-for file in proc.get_sorted_filenames("../CV Light/TiO2_24_CV_Light(*)"):
+for file in proc.get_sorted_filenames(c.FILEPATH_CV_LIGHT):
     voltage, we_current, vrhe, specific_current=np.loadtxt(file,skiprows=1,unpack=True)
 
     we_current=proc.reject_outliers(we_current,31)
@@ -20,7 +21,7 @@ for file in proc.get_sorted_filenames("../CV Light/TiO2_24_CV_Light(*)"):
     data_normalized.append(iv_normalized)
 
 
-#General plots
+#Plot everything at once
 i=0
 for set in data_base:
     r=i%16
