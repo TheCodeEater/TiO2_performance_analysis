@@ -1,4 +1,4 @@
-# Plot using a color gradient
+# Color palettes
 colors=(
     "red",
     "orange",
@@ -9,3 +9,8 @@ colors=(
     "purple",
     "pink"
 )
+
+# Filename patterns
+
+FILEPATH_CV_LIGHT="../CV Light/TiO2_24_CV_Light(*)"
+FILEPATH_CV_DARK="../CV Dark/TiO2_24_CV_Dark(*)"
