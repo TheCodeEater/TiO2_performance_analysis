@@ -97,7 +97,7 @@ if doSmooth:
  #   plt.gca().invert_yaxis()
 
 surf = ax.plot_surface(X,Y,Z, cmap="gnuplot",
-                       linewidth=0, antialiased=False)
+                       linewidth=0, antialiased=True)
 ax.set(xlabel="X",ylabel="Y")
 
 plt.suptitle("Current density map at {} V cell potential".format(target_potential))
