@@ -5,11 +5,6 @@ from glob import glob
 import procedures as proc
 import re
 
-#Set smoothing
-doSmooth=True
-#Set origin position
-zeroToObserver=True
-
 #Load data - Both light and dark
 #IV curve for each potential
 dark_dataset = []
