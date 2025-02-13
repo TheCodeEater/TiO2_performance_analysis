@@ -31,11 +31,15 @@ for set in data_base:
 
     linear_pos+=1
 
+#Custom legend
+legend_elements=[]
 
+for row in range(0,8): #for each row
+    legend_elements.append(plt.Line2D([0],[0],color=c.colors[row],label="Row {}".format(row+1)))
 
 
 #Drawing
-plt.legend()
+plt.legend(handles=legend_elements)
 plt.xlabel("Potential (V)")
 plt.ylabel("WE Current(A)")
 plt.savefig("../Artifacts/cv_light_all/CV_Light_ALL_"+time.strftime("%Y%m%d-%H%M%S")+".png")
