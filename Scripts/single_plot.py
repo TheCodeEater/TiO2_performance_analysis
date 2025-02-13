@@ -8,10 +8,11 @@ import procedures as proc
 #Ask for the point to plot
 print("Type the xy coordinates of the point to examine")
 
-x_pos=input("X:\n")
-y_pos=input("Y:\n")
+x_pos=int(input("X:\n"))
+y_pos=int(input("Y:\n"))
 
 linear_pos=proc.getlinearpos(x_pos,y_pos)
+print(linear_pos)
 
 data_base = []
 data_normalized = []
@@ -31,14 +32,15 @@ data_normalized.append(iv_normalized)
 
 #Plot the single curve
 #Extract the dataset from the list
+#Color is determined by Y coordinate only
 set=data_base[0]
-plt.plot(set["x"],set["y"],color=c.colors[linear_pos],ls="dotted")
+plt.plot(set["x"],set["y"],color=c.colors[y_pos],ls="dotted")
 
 
 #Drawing
 plt.legend()
 plt.xlabel("Potential (V)")
 plt.ylabel("WE Current(A)")
-plt.savefig("../Artifacts/CV_Light_"+time.strftime("%Y%m%d-%H%M%S")+".png")
+plt.savefig("../Artifacts/cv_singleplot/CV_single_"+time.strftime("%Y%m%d-%H%M%S")+".png")
 plt.show()
 
