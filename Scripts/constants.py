@@ -1,14 +1,23 @@
+import matplotlib as mpl
+import numpy as np
+
+
+# Extract 8 colors from coolwarm palette
+values = np.linspace(0, 1, 8)
+
+# Get colors from the coolwarm colormap
+colors = [mpl.colormaps["coolwarm"](value) for value in values]
 # Color palettes
-colors=(
-    "red",
-    "orange",
-    "gold",
-    "green",
-    "teal",
-    "blue",
-    "purple",
-    "pink"
-)
+#colors=(
+ #   "red",
+ #   "orange",
+  #  "gold",
+  #  "green",
+  #  "teal",
+  #  "blue",
+  #  "purple",
+  #  "pink"
+#)
 
 # Filename patterns
 
