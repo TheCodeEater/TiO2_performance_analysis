@@ -42,7 +42,9 @@ for row_index in range(0,8): #for each row
         col_count+=1
 
     #Set labels and title
-    plots[row_index].set(xlabel="Potential (V)", ylabel="Current (A)", title="Row {}".format(row_index + 1))
+    plots[row_index].set(xlabel="Potential (V)", ylabel="Current (A)",
+                         title="Row {}".format(row_index + 1),
+                         xlim=[-0.7, 1.6],ylim=[-0.7e-6, 3e-6])
     plots[row_index].legend()
 
 

@@ -40,7 +40,9 @@ for col in range(0,8): #for each column
         row_count+=1
 
     #Set labels and title
-    plots[col].set(xlabel="Potential (V)", ylabel="Current (A)", title="Column {}".format(col + 1))
+    plots[col].set(xlabel="Potential (V)", ylabel="Current (A)",
+                   title="Column {}".format(col + 1),
+                   xlim=[-0.7, 1.6],ylim=[-0.7e-6, 3e-6])
     plots[col].legend()
 
 
