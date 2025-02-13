@@ -83,13 +83,13 @@ Y=ynew
 Z=znew
 
 #Drawing
+#Transpose for correct drawing
+cd_mat=np.transpose(cd_mat)
 #Create subplots
 fig,ax = plt.subplots(1,3,figsize=(20,5))
 
 # Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
 # Draw 2d pixel
-#Transpose for correct drawing
-cd_mat=np.transpose(cd_mat)
 
 pixel_plot=ax[0].imshow(
   cd_mat, cmap='gnuplot', interpolation='nearest',origin="lower")
