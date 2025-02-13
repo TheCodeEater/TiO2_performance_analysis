@@ -5,10 +5,19 @@ import time
 import constants as c
 import procedures as proc
 
+#Ask for the point to plot
+print("Type the xy coordinates of the point to examine")
+
+x_pos=input("X:\n")
+y_pos=input("Y:\n")
+
+linear_pos=proc.getlinearpos(x_pos,y_pos)
+
 data_base = []
 data_normalized = []
+
 #Load data - multiple datasets
-file= proc.get_sorted_filenames("../CV Light/TiO2_24_CV_Light(*)")[58]
+file= proc.get_sorted_filenames(c.FILEPATH_CV_LIGHT)[linear_pos]
 voltage, we_current, vrhe, specific_current=np.loadtxt(file,skiprows=1,unpack=True)
 
 specific_current=proc.reject_outliers(specific_current,31)
@@ -20,18 +29,10 @@ data_base.append(iv_ch) # Append all dataset
 data_normalized.append(iv_normalized)
 
 
-#General plots
-i=0
-for set in data_base:
-    r=i%16
-    if 8<=r<=15:
-        r=7-(r%8)
-
-    plt.plot(set["x"],set["y"],color=c.colors[r],ls="dotted")#,label="Riga {}".format(r+1))
-
-    i=i+1
-
-
+#Plot the single curve
+#Extract the dataset from the list
+set=data_base[0]
+plt.plot(set["x"],set["y"],color=c.colors[linear_pos],ls="dotted")
 
 
 #Drawing
