@@ -65,7 +65,6 @@ for light,dark in zip(light_dataset,dark_dataset):
     count+=1
 
 #Drawing
-
 # Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
 # Create image
 pixel_plot=plt.Figure()
@@ -74,7 +73,7 @@ pixel_plot=plt.Figure()
 cd_mat=np.transpose(cd_mat)
 
 pixel_plot=plt.imshow(
-  cd_mat, cmap='gnuplot', interpolation='nearest')
+  cd_mat, cmap='gnuplot', interpolation='nearest',origin="lower")
 
 plt.suptitle("Current density map at {} V cell potential".format(target_potential))
 plt.title("Towards positive voltages")
