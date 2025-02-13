@@ -84,7 +84,7 @@ Z=znew
 
 #Drawing
 #Create subplots
-fig,ax = plt.subplots(1,2,figsize=(10,5))
+fig,ax = plt.subplots(1,3,figsize=(20,5))
 
 # Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
 # Draw 2d pixel
@@ -101,13 +101,22 @@ smooth_plot=ax[1].imshow(
 #Set scale formatted for smoothed
 ticks = np.linspace(0, 200, 8)
 
-plt.xticks(ticks, np.arange(8))
-plt.yticks(ticks, np.arange(8))
+ax[1].set_xticks(ticks, np.arange(8))
+ax[1].set_yticks(ticks, np.arange(8))
+
+# Contour plot
+
+cont_plot = ax[2].contour(X,Y,Z, 100,cmap="gnuplot", antialiased=True)
+
+#ax[2].set_xticks(ticks, np.arange(8))
+#ax[2].set_yticks(ticks, np.arange(8))
 
 #General figure properties and scale
 fig.suptitle("Current density map at {} V cell potential\nTowards positive voltages".format(target_potential))
 #fig.colorbar(pixel_plot,label="mA/$cm^2$")
+fig.colorbar(pixel_plot,label="mA/$cm^2$")
 fig.colorbar(smooth_plot,label="mA/$cm^2$")
+fig.colorbar(cont_plot,label="mA/$cm^2$")
 
 plt.savefig("../Artifacts/current_density_maps/CD_{}.png".format(proc.current_time()))
 plt.show()
