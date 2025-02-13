@@ -19,12 +19,16 @@ junk = []
 for file in proc.get_sorted_filenames("../CV Light/TiO2_24_CV_Light(*)"):
     junk, junk, voltage, current_density=np.loadtxt(file,skiprows=1,unpack=True)
 
+    current_density = proc.reject_outliers(current_density, 31)
+
     iv={"x":voltage,"y":current_density}
     light_dataset.append(iv)
 
 #Load dark current density data
 for file in proc.get_sorted_filenames("../CV Dark/TiO2_24_CV_Dark(*)"):
     junk, junk, voltage, current_density=np.loadtxt(file,skiprows=1,unpack=True)
+
+    current_density = proc.reject_outliers(current_density, 31)
 
     iv={"x":voltage,"y":current_density}
     dark_dataset.append(iv)
@@ -56,13 +60,15 @@ for light,dark in zip(light_dataset,dark_dataset):
     #Arrange data in a matrix
     pos=proc.getxy(count)
     cd_mat[pos]=photocurrent
+    print("({},{})\n->Light: {}\n->Dark: {}\n->Delta: {}\nPoint: {}\n----".format(pos[0],pos[1],current_light,current_dark,photocurrent,count))
 
     count+=1
 
 # Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
 # Create image
-
 pixel_plot=plt.Figure()
+
+cd_mat=np.transpose(cd_mat)
 #pixel_plot.add_axes()
 pixel_plot=plt.imshow(
   cd_mat, cmap='gnuplot', interpolation='nearest')
