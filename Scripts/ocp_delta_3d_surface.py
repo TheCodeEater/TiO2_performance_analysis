@@ -6,8 +6,6 @@ import procedures as proc
 import re
 import scipy as sp
 
-#Set target potential - NO MORE
-target_potential=1.1
 #Set smoothing
 doSmooth=True
 #Set origin position
