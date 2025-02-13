@@ -78,7 +78,7 @@ ax[1].set_yticks(ticks, np.arange(8))
 
 # Contour plot
 
-cont_plot = ax[2].contour(X,Y,np.transpose(Z), 60,cmap="gnuplot", antialiased=True)
+cont_plot = ax[2].contour(X,Y,np.transpose(Z), 80,cmap="gnuplot", antialiased=True)
 
 plt.suptitle("OCP photovoltage map (average)")
 plt.colorbar(pixel_plot,label="V")
