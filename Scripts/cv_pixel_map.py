@@ -106,7 +106,7 @@ ax[1].set_yticks(ticks, np.arange(8))
 
 # Contour plot
 
-cont_plot = ax[2].contour(X,Y,np.transpose(Z), 100,cmap="gnuplot", antialiased=True)
+cont_plot = ax[2].contour(X,Y,np.transpose(Z), 60,cmap="gnuplot", antialiased=True)
 
 #ax[2].set_xticks(ticks, np.arange(8))
 #ax[2].set_yticks(ticks, np.arange(8))
