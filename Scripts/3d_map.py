@@ -91,10 +91,10 @@ if doSmooth:
     Y=ynew
     Z=znew
 
-if zeroToObserver:
-    plt.gca().invert_xaxis()
-else:
-    plt.gca().invert_yaxis()
+#if zeroToObserver:
+ #   plt.gca().invert_xaxis()
+#else:
+ #   plt.gca().invert_yaxis()
 
 surf = ax.plot_surface(X,Y,Z, cmap="gnuplot",
                        linewidth=0, antialiased=False)
