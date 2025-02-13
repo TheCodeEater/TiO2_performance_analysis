@@ -11,6 +11,8 @@ data_normalized = []
 for file in proc.get_sorted_filenames("../CV Light/TiO2_24_CV_Light(*)"):
     voltage, we_current, vrhe, specific_current=np.loadtxt(file,skiprows=1,unpack=True)
 
+    we_current=proc.reject_outliers(we_current,31)
+
     iv_ch={"x":voltage,"y":we_current}
     iv_normalized={"x":vrhe,"y":specific_current}
 
