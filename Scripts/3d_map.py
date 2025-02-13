@@ -10,6 +10,8 @@ import scipy as sp
 target_potential=1.1
 #Set smoothing
 doSmooth=True
+#Set origin position
+zeroToObserver=True
 
 #Load data - Both light and dark
 #IV curve for each potential
@@ -81,16 +83,18 @@ Z=cd_mat
 #Smooth the dataset
 #interpolate the matrix along a finer lattice
 if doSmooth:
-    xnew, ynew = np.mgrid[0:7:20j, 0:7:20j]
-    tck = sp.interpolate.bisplrep(X, Y, Z, s=0)
+    xnew, ynew = np.mgrid[0:7:200j, 0:7:200j]
+    tck = sp.interpolate.bisplrep(X, Y, Z, s=10)
     znew = sp.interpolate.bisplev(xnew[:,0], ynew[0,:], tck)
 
     X=xnew
     Y=ynew
     Z=znew
 
-#plt.gca().invert_xaxis()
-plt.gca().invert_yaxis()
+if zeroToObserver:
+    plt.gca().invert_xaxis()
+else:
+    plt.gca().invert_yaxis()
 
 surf = ax.plot_surface(X,Y,Z, cmap="gnuplot",
                        linewidth=0, antialiased=False)
@@ -100,5 +104,5 @@ plt.suptitle("Current density map at {} V cell potential".format(target_potentia
 plt.title("Towards positive voltages")
 #plt.colorbar(label="mA/$cm^2$")
 
-plt.savefig("../Artifacts/current_density_maps_3D/CD_{}.png".format(proc.current_time()))
+plt.savefig("../Artifacts/current_density_maps_3D/CD_3D_{}.png".format(proc.current_time()))
 plt.show()
