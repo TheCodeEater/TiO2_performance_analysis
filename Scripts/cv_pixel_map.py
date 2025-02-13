@@ -5,6 +5,7 @@ from glob import glob
 import procedures as proc
 import re
 import scipy as sp
+from matplotlib.ticker import FuncFormatter
 
 #Request target potential
 target_potential=float(input("Insert target potential") or 1.1)
@@ -96,6 +97,12 @@ pixel_plot=ax[0].imshow(
 # Draw 2d smoothed
 smooth_plot=ax[1].imshow(
     Z, cmap='gnuplot', interpolation='nearest',origin="lower")
+
+#Set scale formatted for smoothed
+ticks = np.linspace(0, 200, 8)
+
+plt.xticks(ticks, np.arange(8))
+plt.yticks(ticks, np.arange(8))
 
 #General figure properties and scale
 fig.suptitle("Current density map at {} V cell potential\nTowards positive voltages".format(target_potential))
