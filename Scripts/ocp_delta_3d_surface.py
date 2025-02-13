@@ -51,7 +51,7 @@ cd_mat=np.transpose(cd_mat) # Fix orientation of matrix
 
 # Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
 # Create image
-fig, ax = plt.subplots(1,2,subplot_kw={"projection": "3d"},figsize=(12,12))
+fig, ax = plt.subplots(1,2,subplot_kw={"projection": "3d"},figsize=(10,6))
 plots=ax.flatten()
 
 X=np.arange(0,8,1)
