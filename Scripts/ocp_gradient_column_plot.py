@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from glob import glob
-import time
+import time as tm
 import constants as c
 import procedures as proc
 import scipy as sp
@@ -26,23 +26,19 @@ for file in proc.get_sorted_filenames(c.FILEPATH_OCP_DARK):
 
 #Compute differences - NO AVERAGE
 
-count=0
-cd_mat = np.zeros((8,8))
+photovoltage_dataset=[]
 
 for light,dark in zip(light_dataset,dark_dataset):
-    voltage_light=np.average(light)
-    voltage_dark=np.average(dark)
+    voltage_light=light["y"]
+    voltage_dark=dark["y"]
 
     #Compute current density difference. this is the photocurrent
     photovoltage=voltage_light-voltage_dark
 
-    #Arrange data in a matrix
-    pos=proc.getxy(count)
-    cd_mat[pos]=photovoltage
+    #Arrange data in a dictionary
+    #Use only light time, they are the same up to uncertainty
+    photovoltage_dataset.append({"x":light["x"],"y":photovoltage})
 
-    count+=1
-
-cd_mat=np.transpose(cd_mat) # Fix orientation of matrix
 
 
 #Create subplots for each column
@@ -53,7 +49,7 @@ plots=ax.flatten()
 # Plot for each column
 for col in range(0,8): #for each column
     #Get column as linear array
-    column=data_base[col*8:(col+1)*8]#excludes last element, which is part of the next column (or out of bound if last col)
+    column=photovoltage_dataset[col*8:(col+1)*8]#excludes last element, which is part of the next column (or out of bound if last col)
     #Reverse row if parity is odd (first column is 0)
     if col%2==1:
         column=reversed(column)
@@ -66,12 +62,12 @@ for col in range(0,8): #for each column
     #Set labels and title
     plots[col].set(xlabel="Potential (V)", ylabel="Current (A)",
                    title="Column {}".format(col + 1),
-                   xlim=c.CRG_XLIM,ylim=c.CRG_YLIM)
+                   xlim=c.OCP_XLIM,ylim=c.OCP_YLIM)
     plots[col].legend()
 
 
 #Drawing
 plt.legend()
-plt.savefig("../Artifacts/cv_light_column_gradient/CV_Light_COL_"+time.strftime("%Y%m%d-%H%M%S")+".png")
+plt.savefig("../Artifacts/cv_light_column_gradient/CV_Light_COL_"+tm.strftime("%Y%m%d-%H%M%S")+".png")
 plt.show()
 

@@ -31,3 +31,6 @@ FILEPATH_EIS_DARK="../EIS Dark/TiO2_24_EIS_Dark(*)"
 #For row and column gradients
 CRG_XLIM=[-0.7, 1.6]
 CRG_YLIM=[-1.2e-6, 3e-6]
+
+OCP_XLIM=[-0.1,10]
+OCP_YLIM=[-0.28,-0.01]
