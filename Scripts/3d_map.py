@@ -9,7 +9,7 @@ import scipy as sp
 #Set target potential
 target_potential=1.1
 #Set smoothing
-doSmooth=False
+doSmooth=True
 
 #Load data - Both light and dark
 #IV curve for each potential
@@ -76,6 +76,7 @@ fig, ax = plt.subplots(subplot_kw={"projection": "3d"},figsize=(10,10))
 X=np.arange(0,8,1)
 Y=X
 X, Y = np.meshgrid(X, Y)
+Z=cd_mat
 
 #Smooth the dataset
 #interpolate the matrix along a finer lattice
@@ -86,8 +87,9 @@ if doSmooth:
 
     X=xnew
     Y=ynew
+    Z=znew
 
-Z=cd_mat
+
 
 surf = ax.plot_surface(X,Y,Z, cmap="gnuplot",
                        linewidth=0, antialiased=False)
