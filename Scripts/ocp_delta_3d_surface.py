@@ -51,7 +51,9 @@ cd_mat=np.transpose(cd_mat) # Fix orientation of matrix
 
 # Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
 # Create image
-fig, ax = plt.subplots(subplot_kw={"projection": "3d"},figsize=(10,10))
+fig, ax = plt.subplots(1,3,subplot_kw={"projection": "3d"},figsize=(10,10))
+plots=ax.flatten()
+
 X=np.arange(0,8,1)
 Y=X
 X, Y = np.meshgrid(X, Y)
@@ -68,16 +70,17 @@ if doSmooth:
     Y=ynew
     Z=znew
 
-#if zeroToObserver:
- #   plt.gca().invert_xaxis()
-#else:
- #   plt.gca().invert_yaxis()
+#Plot surface
 
-surf = ax.plot_surface(X,Y,Z, cmap="gnuplot",
+surf = plots[0].plot_surface(X,Y,Z, cmap="gnuplot",
                        linewidth=0, antialiased=True)
-ax.set(xlabel="X",ylabel="Y")
+ax[0].set(xlabel="X",ylabel="Y")
 
-plt.suptitle("OCP photovoltage map (average)".format(target_potential))
+#Plot contour
+
+#Plot 2d
+
+plt.suptitle("OCP photovoltage map (average)")
 #plt.colorbar(label="mA/$cm^2$")
 
 plt.savefig("../Artifacts/ocp_voltage_delta/OCP_dV_3D_{}.png".format(proc.current_time()))
