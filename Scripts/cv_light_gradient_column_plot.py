@@ -36,7 +36,7 @@ for col in range(0,8): #for each column
 
     row_count=0
     for row in column: #for each row, plot according to colors
-        plots[col].plot(row["x"],row["y"],color=c.colors[row_count],label="Riga {}".format(row_count+1))
+        plots[col].plot(row["x"],row["y"],color=c.colors[row_count],label="Row {}".format(row_count+1))
         row_count+=1
 
     #Set labels and title
