@@ -89,7 +89,7 @@ if doSmooth:
     Y=ynew
     Z=znew
 
-
+plt.gca().invert_xaxis()
 
 surf = ax.plot_surface(X,Y,Z, cmap="gnuplot",
                        linewidth=0, antialiased=False)
