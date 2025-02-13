@@ -4,9 +4,12 @@ import constants as c
 from glob import glob
 import procedures as proc
 import re
+import scipy as sp
 
 #Set target potential
 target_potential=1.1
+#Set smoothing
+doSmooth=False
 
 #Load data - Both light and dark
 #IV curve for each potential
@@ -16,7 +19,7 @@ light_dataset = []
 junk = []
 
 #Load light current density data
-for file in proc.get_sorted_filenames("../CV Light/TiO2_24_CV_Light(*)"):
+for file in proc.get_sorted_filenames(c.FILEPATH_CV_LIGHT):
     junk, junk, voltage, current_density=np.loadtxt(file,skiprows=1,unpack=True)
 
     current_density = proc.reject_outliers(current_density, 31)
@@ -25,7 +28,7 @@ for file in proc.get_sorted_filenames("../CV Light/TiO2_24_CV_Light(*)"):
     light_dataset.append(iv)
 
 #Load dark current density data
-for file in proc.get_sorted_filenames("../CV Dark/TiO2_24_CV_Dark(*)"):
+for file in proc.get_sorted_filenames(c.FILEPATH_CV_DARK):
     junk, junk, voltage, current_density=np.loadtxt(file,skiprows=1,unpack=True)
 
     current_density = proc.reject_outliers(current_density, 31)
@@ -74,7 +77,19 @@ X=np.arange(0,8,1)
 Y=X
 X, Y = np.meshgrid(X, Y)
 
-surf = ax.plot_surface(X, Y, cd_mat, cmap="gnuplot",
+#Smooth the dataset
+#interpolate the matrix along a finer lattice
+if doSmooth:
+    xnew, ynew = np.mgrid[0:7:40j, 0:7:40j]
+    tck = sp.interpolate.bisplrep(X, Y, cd_mat, s=0)
+    znew = sp.interpolate.bisplev(xnew[:,0], ynew[0,:], tck)
+
+    X=xnew
+    Y=ynew
+
+Z=cd_mat
+
+surf = ax.plot_surface(X,Y,Z, cmap="gnuplot",
                        linewidth=0, antialiased=False)
 ax.set(xlabel="X",ylabel="Y")
 
