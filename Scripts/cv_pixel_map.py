@@ -4,6 +4,7 @@ import constants as c
 from glob import glob
 import procedures as proc
 import re
+import scipy as sp
 
 #Request target potential
 target_potential=float(input("Insert target potential") or 1.1)
@@ -64,20 +65,42 @@ for light,dark in zip(light_dataset,dark_dataset):
 
     count+=1
 
-#Drawing
-# Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
-# Create image
-pixel_plot=plt.Figure()
+#Compute smooth version
+X=np.arange(0,8,1)
+Y=X
+X, Y = np.meshgrid(X, Y)
+Z=cd_mat
 
+#Smooth the dataset
+#interpolate the matrix along a finer lattice
+xnew, ynew = np.mgrid[0:7:200j, 0:7:200j]
+tck = sp.interpolate.bisplrep(X, Y, Z, s=10)
+znew = sp.interpolate.bisplev(xnew[:,0], ynew[0,:], tck)
+
+X=xnew
+Y=ynew
+Z=znew
+
+#Drawing
+#Create subplots
+fig,ax = plt.subplots(1,2,figsize=(10,5))
+
+# Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
+# Draw 2d pixel
 #Transpose for correct drawing
 cd_mat=np.transpose(cd_mat)
 
-pixel_plot=plt.imshow(
+pixel_plot=ax[0].imshow(
   cd_mat, cmap='gnuplot', interpolation='nearest',origin="lower")
 
-plt.suptitle("Current density map at {} V cell potential".format(target_potential))
-plt.title("Towards positive voltages")
-plt.colorbar(label="mA/$cm^2$")
+# Draw 2d smoothed
+smooth_plot=ax[1].imshow(
+    Z, cmap='gnuplot', interpolation='nearest',origin="lower")
+
+#General figure properties and scale
+fig.suptitle("Current density map at {} V cell potential\nTowards positive voltages".format(target_potential))
+#fig.colorbar(pixel_plot,label="mA/$cm^2$")
+fig.colorbar(smooth_plot,label="mA/$cm^2$")
 
 plt.savefig("../Artifacts/current_density_maps/CD_{}.png".format(proc.current_time()))
 plt.show()
