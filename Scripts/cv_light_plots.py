@@ -22,15 +22,14 @@ for file in proc.get_sorted_filenames(c.FILEPATH_CV_LIGHT):
 
 
 #Plot everything at once
-i=0
+linear_pos=0
 for set in data_base:
-    r=i%16
-    if 8<=r<=15:
-        r=7-(r%8)
+    #convert linear position to coordinates
+    x,y=proc.getxy(linear_pos)
+    #use y coord to find color
+    plt.plot(set["x"],set["y"],color=c.colors[y],ls="dotted")#,label="Riga {}".format(r+1))
 
-    plt.plot(set["x"],set["y"],color=c.colors[r],ls="dotted")#,label="Riga {}".format(r+1))
-
-    i=i+1
+    linear_pos+=1
 
 
 
