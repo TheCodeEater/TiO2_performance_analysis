@@ -23,6 +23,8 @@ colors = [mpl.colormaps["coolwarm"](value) for value in values]
 
 FILEPATH_CV_LIGHT="../CV Light/TiO2_24_CV_Light(*)"
 FILEPATH_CV_DARK="../CV Dark/TiO2_24_CV_Dark(*)"
+FILEPATH_OCP_DARK="../OCP Dark/TiO2_24_OCP_Dark(*)"
+FILEPATH_OCP_LIGHT="../OCP Light/TiO2_24_OCP_Light(*)"
 
 #Axis limits
 #For row and column gradients
