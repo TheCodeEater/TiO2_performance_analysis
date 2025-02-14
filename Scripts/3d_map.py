@@ -52,7 +52,7 @@ potential_array[:max_potential_index]
 index=np.argmin(np.abs(potential_array - target_potential)) #index of the wanted potential in the dataset
 
 count=0
-cd_mat = np.zeros((X_max,Y_max))
+cd_mat = proc.getBlankSampleMatrix()
 
 for light,dark in zip(light_dataset,dark_dataset):
     current_light=light["y"][index]
