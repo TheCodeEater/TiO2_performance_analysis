@@ -18,7 +18,7 @@ import functools
     Use absolute coordinates
     
 """
-def scanSequence(width,height,step_x,step_y,backToZero):
+def absScanSequence(width,height,step_x,step_y,backToZero):
     #Convert the parameters in terms of the discrete X,Y matrix
     #using units of step
     X_min=0
@@ -85,6 +85,10 @@ def toRelativeSequence(sequence):
     return {"x":X_rel,"y":Y_rel}
 
 
+def relScanSequence(width,height,step_x,step_y,backToZero):
+    return convertToAU(toRelativeSequence(absScanSequence(width,height,step_x,step_y,backToZero)),step_x,step_y)
+
+
 #
 # DECORATORS
 #
@@ -106,7 +110,3 @@ def toAU(_func=None, *,unit_x,unit_y): #decorator with parameters. Assemble deco
     else:
         return decorator_toAU(_func)
 
-@makeRelative
-@toAU(unit_x=5,unit_y=5)
-def relativeSequence(*args):
-    return scanSequence(*args)
