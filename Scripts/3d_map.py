@@ -20,8 +20,6 @@ X_max,Y_max=proc.getXYMax()
 dark_dataset = []
 light_dataset = []
 
-junk = []
-
 #Load light current density data
 for file in proc.get_sorted_filenames(c.FILEPATH_CV_LIGHT):
     junk, junk, voltage, current_density=np.loadtxt(file,skiprows=1,unpack=True)
