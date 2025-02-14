@@ -17,8 +17,8 @@ backToZero=False
 def LoadMatrixSize(f):
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
-        kwargs["X_len"]=X_points
-        kwargs["Y_len"]=Y_points
+        kwargs["X_max"]=X_points
+        kwargs["Y_max"]=Y_points
         kwargs["backToZero"]=backToZero
         return f(*args, **kwargs)
 
