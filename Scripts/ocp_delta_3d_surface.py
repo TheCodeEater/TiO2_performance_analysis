@@ -34,8 +34,8 @@ count=0
 cd_mat = np.zeros((8,8))
 
 for light,dark in zip(light_dataset,dark_dataset):
-    voltage_light=np.average(light)
-    voltage_dark=np.average(dark)
+    voltage_light=np.average(light[-10:0])
+    voltage_dark=np.average(dark[-10:0])
 
     #Compute current density difference. this is the photocurrent
     photovoltage=voltage_light-voltage_dark
