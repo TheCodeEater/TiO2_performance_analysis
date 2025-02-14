@@ -52,8 +52,12 @@ def scanSequence(width,height,step_x,step_y,backToZero):
     Convert a sequence dictionary in different x and y units
 """
 def convertToAU(sequence,unit_x,unit_y):
-    X=sequence["x"]*unit_x
-    Y=sequence["y"]*unit_y
+    X=sequence["x"]
+    Y=sequence["y"]
+
+    X = [x*unit_x for x in X]
+    Y = [y * unit_y for y in Y]
+
     return {"x":X,"y":Y}
 
 """!
