@@ -80,5 +80,21 @@ def toRelativeSequence(sequence):
     return {"x":X_rel,"y":Y_rel}
 
 
+#
+# DECORATORS
+#
 
-print(toRelativeSequence(scanSequence(8,8,1,1,False)))
+def _makeRelative(f):
+    def wrapper(*args,**kwargs):
+        return toRelativeSequence(f(args,kwargs))
+    return wrapper
+
+def _toAU(unit_x,unit_y): #decorator with parameters. Assemble decorator with fixed par and return
+    def decorator_toAU(f):
+        def wrapper(*args,**kwargs):
+            return convertToAU(f(args,kwargs),unit_x,unit_y)
+
+    return decorator_toAU()
+
+
+
