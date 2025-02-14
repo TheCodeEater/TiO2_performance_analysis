@@ -14,8 +14,10 @@
     @:param step_y the increasing step on y axis
     @:param back_to_zero wether to start the next Y axis scan at y=0 or from the last value
     
+    Use absolute coordinates
+    
 """
-def scanSequence(width,height,step_x,step_y,backToZero):
+def absScanSequence(width,height,step_x,step_y,backToZero):
     #Convert the parameters in terms of the discrete X,Y matrix
     #using units of step
     X_min=0
@@ -45,4 +47,38 @@ def scanSequence(width,height,step_x,step_y,backToZero):
 
     return sequence
 
-print(scanSequence(8,8,1,1,True))
+"""!
+    Convert a sequence dictionary in different x and y units
+"""
+def convertToAU(sequence,unit_x,unit_y):
+    X=sequence["x"]*unit_x
+    Y=sequence["y"]*unit_y
+    return {"x":X,"y":Y}
+
+"""!
+    Turn existing sequence into relative 
+"""
+def toRelativeSequence(sequence):
+    #Get the sequences
+    X=sequence["x"]
+    Y=sequence["y"]
+    #Ensure len is ok
+    assert(len(X)==len(Y))
+
+    X_rel=[]
+    Y_rel=[]
+
+    #Add first element manually
+    X_rel.append(X[0])
+    Y_rel.append(Y[0])
+
+    for i in range(1,len(X)):
+        X_rel.append(X[i]-X[i-1])
+        Y_rel.append(Y[i]-Y[i-1])
+
+    #Reassemble the dict
+    return {"x":X_rel,"y":Y_rel}
+
+
+
+print(toRelativeSequence(absScanSequence(8,8,1,1,False)))
