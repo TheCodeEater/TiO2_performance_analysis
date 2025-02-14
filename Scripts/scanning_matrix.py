@@ -110,5 +110,3 @@ def toAU(_func=None, *,unit_x,unit_y): #decorator with parameters. Assemble deco
 @toAU(unit_x=5,unit_y=5)
 def relativeSequence(*args):
     return scanSequence(*args)
-
-print(relativeSequence(60,60,5,5,True))
