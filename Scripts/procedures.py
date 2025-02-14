@@ -30,15 +30,23 @@ def getxy(linear_position,**kwargs):
 
         return (x,y)
 
-def getlinearpos(x,y):
-    #Position if Y was 0
+@LoadMatrixSize
+def getlinearpos(x,y,**kwargs):
+    #ensure the range is ok
+    assert(x<=kwargs["X_max"])
+    assert(y<=kwargs["Y_max"])
+    linear_position=0
 
-    #if on even column
-    if x%2==0:
-        linear_position=x*8+y
-    #if on odd column
+    #if coming back to 0
+    if kwargs["backToZero"]:
+        linear_position=x*kwargs["X_max"]+y #add a column for each x plus y offset inside the column
     else:
-        linear_position=x*8+(7-y)
+        #if on even column
+        if x%2==0:
+           linear_position=x*kwargs["X_max"]+y
+        #if on odd column
+        else:
+            linear_position=x*kwargs["X_max"]+(kwargs["Y_max"]-1-y)
 
     return linear_position
 
