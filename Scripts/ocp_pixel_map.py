@@ -29,8 +29,8 @@ count=0
 cd_mat = np.zeros((8,8))
 
 for light,dark in zip(light_dataset,dark_dataset):
-    voltage_light=np.average(light)
-    voltage_dark=np.average(dark)
+    voltage_light=np.average(light[-10:])
+    voltage_dark=np.average(dark[-10:])
 
     #Compute current density difference. this is the photocurrent
     photovoltage=voltage_light-voltage_dark
@@ -62,6 +62,8 @@ fig,ax = plt.subplots(1,3,figsize=(20,5))
 
 # Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
 # Draw 2d pixel
+#Set correct orientation for pixel
+cd_mat=np.transpose(cd_mat)
 
 pixel_plot=ax[0].imshow(
   cd_mat, cmap='gnuplot', interpolation='nearest',origin="lower")
@@ -80,7 +82,7 @@ ax[1].set_yticks(ticks, np.arange(8))
 
 cont_plot = ax[2].contour(X,Y,np.transpose(Z), 80,cmap="gnuplot", antialiased=True)
 
-plt.suptitle("OCP photovoltage map (average)")
+plt.suptitle("OCP photovoltage map (average of last 10)")
 plt.colorbar(pixel_plot,label="V")
 plt.colorbar(smooth_plot,label="V")
 plt.colorbar(cont_plot,label="V")

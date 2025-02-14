@@ -68,6 +68,6 @@ for col in range(0,8): #for each column
 
 #Drawing
 plt.legend()
-plt.savefig("../Artifacts/cv_light_column_gradient/CV_Light_COL_"+tm.strftime("%Y%m%d-%H%M%S")+".png")
+plt.savefig("../Artifacts/ocp_column_gradient/OCP_COL_"+tm.strftime("%Y%m%d-%H%M%S")+".png")
 plt.show()
 
