@@ -12,6 +12,8 @@ target_potential=1.1
 doSmooth=True
 #Set origin position
 zeroToObserver=True
+#Get matrix size
+X_max,Y_max=proc.getXYMax()
 
 #Load data - Both light and dark
 #IV curve for each potential
@@ -52,7 +54,7 @@ potential_array[:max_potential_index]
 index=np.argmin(np.abs(potential_array - target_potential)) #index of the wanted potential in the dataset
 
 count=0
-cd_mat = proc.getBlankSampleMatrix()
+cd_mat = np.zeros((X_max,Y_max))
 
 for light,dark in zip(light_dataset,dark_dataset):
     current_light=light["y"][index]
@@ -81,7 +83,7 @@ Z=cd_mat
 #Smooth the dataset
 #interpolate the matrix along a finer lattice
 if doSmooth:
-    xnew, ynew = np.mgrid[0:7:200j, 0:7:200j]
+    xnew, ynew = np.mgrid[0:X_max-1:200j, 0:Y_max-1:200j]
     tck = sp.interpolate.bisplrep(X, Y, Z, s=10)
     znew = sp.interpolate.bisplev(xnew[:,0], ynew[0,:], tck)
 
