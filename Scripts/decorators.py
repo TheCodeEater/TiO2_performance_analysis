@@ -26,7 +26,7 @@ def LoadMatrixSize(f):
 
     return wrapper
 
-def Smooth(finesseX=200,finesseY=200,s_factor=10):
+def Smooth(_func=None,*,finesseX=200j,finesseY=200j,s_factor=10):
     def smooth_decorator(f):
         @functools.wraps(f)
         def wrapper(*args,**kwargs):
@@ -39,4 +39,8 @@ def Smooth(finesseX=200,finesseY=200,s_factor=10):
             return (xnew,ynew,znew)
 
         return wrapper
-    return smooth_decorator
+
+    if _func is None:
+        return smooth_decorator(None)
+    else:
+        return smooth_decorator(_func)
