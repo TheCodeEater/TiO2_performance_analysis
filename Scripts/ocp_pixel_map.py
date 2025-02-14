@@ -25,27 +25,33 @@ for file in proc.get_sorted_filenames(c.FILEPATH_OCP_DARK):
 
 #Compute differences
 
-count=0
-cd_mat = np.zeros((8,8))
+def deltaOCP(light_dataset,dark_dataset):
+    Z_matrix = proc.getBlankSampleMatrix() #get empty matrix for z data
 
-for light,dark in zip(light_dataset,dark_dataset):
-    voltage_light=np.average(light[-10:])
-    voltage_dark=np.average(dark[-10:])
+    count = 0
+    for light,dark in zip(light_dataset,dark_dataset):
+        voltage_light=np.average(light[-10:])
+        voltage_dark=np.average(dark[-10:])
 
-    #Compute current density difference. this is the photocurrent
-    photovoltage=voltage_light-voltage_dark
+        #Compute current density difference. this is the photocurrent
+        photovoltage=voltage_light-voltage_dark
 
-    #Arrange data in a matrix
-    pos=proc.getXY(count)
-    cd_mat[pos]=photovoltage
+        #Arrange data in a matrix
+        pos=proc.getXY(count)
+        Z_matrix[pos]=photovoltage
 
-    count+=1
+        count+=1
+
+    #Compute XY axis
+    X = np.arange(0, 8, 1)
+    Y = X
+    X, Y = np.meshgrid(X, Y)
+
+    return (X,Y,Z_matrix)
 
 #Compute smooth version
-X=np.arange(0,8,1)
-Y=X
-X, Y = np.meshgrid(X, Y)
-Z=cd_mat
+
+X,Y,Z=deltaOCP(light_dataset,dark_dataset)
 
 #Smooth the dataset
 #interpolate the matrix along a finer lattice
@@ -57,13 +63,15 @@ X=xnew
 Y=ynew
 Z=znew
 
+cd_mat=Z
+
 #Create subplots
 fig,ax = plt.subplots(1,3,figsize=(20,5))
 
 # Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
 # Draw 2d pixel
 #Set correct orientation for pixel
-cd_mat=np.transpose(cd_mat)
+#cd_mat=np.transpose(cd_mat)
 
 pixel_plot=ax[0].imshow(
   cd_mat, cmap='gnuplot', interpolation='nearest',origin="lower")
