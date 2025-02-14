@@ -29,9 +29,7 @@ for file in proc.get_sorted_filenames(c.FILEPATH_OCP_DARK):
 X,Y,Z=proc.deltaOCP(light_dataset,dark_dataset)
 
 #Compute smooth
-xnew, ynew = np.mgrid[0:X_max:200j, 0:Y_max - 1:200j]
-tck = sp.interpolate.bisplrep(X, Y, Z, s=10)
-znew = sp.interpolate.bisplev(xnew[:, 0], ynew[0, :], tck)
+xnew, ynew, znew = proc.smoothMatrix(X,Y,Z)
 
 #Create subplots
 fig,ax = plt.subplots(1,3,figsize=(20,5))

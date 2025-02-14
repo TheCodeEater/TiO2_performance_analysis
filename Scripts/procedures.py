@@ -2,7 +2,7 @@ import time
 import re
 from glob import glob
 import numpy as np
-import scipy as scp
+import scipy as sp
 from decorators import LoadMatrixSize, Smooth
 
 # Assign sequence position to x,y of point
@@ -88,6 +88,14 @@ def deltaOCP(light_dataset,dark_dataset):
 
     return (X,Y,Z_matrix)
 
+def smoothMatrix(X,Y,Z,finesseX=200j,finesseY=200j,s_factor=10):
+    X_max,Y_max=getXYMax()
+
+    xnew, ynew = np.mgrid[0:X_max - 1:finesseX, 0:Y_max - 1:finesseY]
+    tck = sp.interpolate.bisplrep(X, Y, Z, s=s_factor)
+    znew = sp.interpolate.bisplev(xnew[:, 0], ynew[0, :], tck)
+
+    return (xnew,ynew,znew)
 
 def get_file_number(file):
     # For each file, match position and put in the list
@@ -99,4 +107,4 @@ def get_sorted_filenames(path):
     return sorted(filenames, key=get_file_number)
 
 def reject_outliers(data, m=2):
-    return scp.ndimage.median_filter(data,m)
+    return sp.ndimage.median_filter(data,m)
