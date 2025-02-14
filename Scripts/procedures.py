@@ -3,23 +3,32 @@ import re
 from glob import glob
 import numpy as np
 import scipy as scp
-# Assign sequence position to x,y of point
+from decorators import LoadMatrixSize
 
+# Assign sequence position to x,y of point
+@LoadMatrixSize
 def getxy(linear_position,**kwargs):
     #Assigning variables
     X_max=kwargs["X_max"]
     Y_max=kwargs["Y_max"]
 
+    #Works regardless of scan order
     x=linear_position // X_max
 
-    r=linear_position % Y_max*2
+    #If coming back to zero after moving on x axis
+    if kwargs["backToZero"]:
+        y=linear_position % Y_max
+        return (x,y)
 
-    if Y_max <=r <= Y_max*2-1:
-        y=Y_max-1-(r%Y_max)
-    else:
-        y=r
+    else: #otherwise use the algorithm
+        r=linear_position % (Y_max*2)
 
-    return (x,y)
+        if Y_max <=r <= Y_max*2-1:
+            y=Y_max-1-(r%Y_max)
+        else:
+            y=r
+
+        return (x,y)
 
 def getlinearpos(x,y):
     #Position if Y was 0
