@@ -70,11 +70,11 @@ for light,dark in zip(light_dataset,dark_dataset):
     count+=1
 
 cd_mat=np.transpose(cd_mat) # Fix orientation of matrix
-#Reflect
 
 # Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
 # Create image
 fig, ax = plt.subplots(subplot_kw={"projection": "3d"},figsize=(10,10))
+
 X=np.arange(0,8,1)
 Y=X
 X, Y = np.meshgrid(X, Y)
@@ -82,19 +82,7 @@ Z=cd_mat
 
 #Smooth the dataset
 #interpolate the matrix along a finer lattice
-if doSmooth:
-    xnew, ynew = np.mgrid[0:7:200j, 0:7:200j]
-    tck = sp.interpolate.bisplrep(X, Y, Z, s=10)
-    znew = sp.interpolate.bisplev(xnew[:,0], ynew[0,:], tck)
-
-    X=xnew
-    Y=ynew
-    Z=znew
-
-#if zeroToObserver:
- #   plt.gca().invert_xaxis()
-#else:
- #   plt.gca().invert_yaxis()
+X,Y,Z=proc.smoothMatrix(X,Y,Z)
 
 surf = ax.contour(X,Y,Z, 100,cmap="gnuplot", antialiased=True)
 ax.set(xlabel="X",ylabel="Y")

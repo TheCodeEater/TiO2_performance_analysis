@@ -80,19 +80,7 @@ Z=cd_mat
 
 #Smooth the dataset
 #interpolate the matrix along a finer lattice
-if doSmooth:
-    xnew, ynew = np.mgrid[0:X_max-1:200j, 0:Y_max-1:200j]
-    tck = sp.interpolate.bisplrep(X, Y, Z, s=10)
-    znew = sp.interpolate.bisplev(xnew[:,0], ynew[0,:], tck)
-
-    X=xnew
-    Y=ynew
-    Z=znew
-
-#if zeroToObserver:
- #   plt.gca().invert_xaxis()
-#else:
- #   plt.gca().invert_yaxis()
+X,Y,Z=proc.smoothMatrix(X,Y,Z)
 
 surf = ax.plot_surface(X,Y,Z, cmap="gnuplot",
                        linewidth=0, antialiased=True)
