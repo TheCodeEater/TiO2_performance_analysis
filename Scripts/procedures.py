@@ -12,6 +12,8 @@ def getxy(linear_position,**kwargs):
     X_max=kwargs["X_max"]
     Y_max=kwargs["Y_max"]
 
+    assert(linear_position<=X_max*Y_max)
+
     #Works regardless of scan order
     x=linear_position // X_max
 
