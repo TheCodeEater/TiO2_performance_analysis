@@ -52,7 +52,7 @@ potential_array[:max_potential_index]
 index=np.argmin(np.abs(potential_array - target_potential)) #index of the wanted potential in the dataset
 
 count=0
-cd_mat = np.zeros((8,8))
+cd_mat = proc.getBlankSampleMatrix()
 
 for light,dark in zip(light_dataset,dark_dataset):
     current_light=light["y"][index]
@@ -61,11 +61,9 @@ for light,dark in zip(light_dataset,dark_dataset):
     #Compute current density difference. this is the photocurrent
     photocurrent=current_light-current_dark
 
-
     #Arrange data in a matrix
     pos=proc.getXY(count)
     cd_mat[pos]=photocurrent
-    #print("({},{})\n->Light: {}\n->Dark: {}\n->Delta: {}\nPoint: {}\n----".format(pos[0],pos[1],current_light,current_dark,photocurrent,count))
 
     count+=1
 

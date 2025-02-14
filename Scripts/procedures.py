@@ -52,6 +52,11 @@ def getLinearPosition(x, y, **kwargs):
 
     return linear_position
 
+@LoadMatrixSize
+def getBlankSampleMatrix(**kwargs):
+    return np.zeros(kwargs["X_max"],kwargs["Y_max"])
+
+
 def current_time():
     return time.strftime("%Y%m%d-%H%M%S")
 
