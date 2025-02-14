@@ -54,7 +54,7 @@ def getLinearPosition(x, y, **kwargs):
 
 @LoadMatrixSize
 def getBlankSampleMatrix(**kwargs):
-    return np.zeros(kwargs["X_max"],kwargs["Y_max"])
+    return np.zeros((kwargs["X_max"],kwargs["Y_max"]))
 
 @LoadMatrixSize
 def getXYMax(**kwargs):
