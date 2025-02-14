@@ -18,13 +18,13 @@ import functools
     Use absolute coordinates
     
 """
-def absScanSequence(width,height,step_x,step_y,backToZero):
+def absScanSequence(width,height,**kwargs):
     #Convert the parameters in terms of the discrete X,Y matrix
     #using units of step
     X_min=0
-    X_max=width//step_x
+    X_max=width//kwargs["step_x"]
     Y_min=0
-    Y_max=height//step_y
+    Y_max=height//kwargs["step_y"]
 
     X_sequence=[]
     Y_sequence=[]
@@ -36,7 +36,7 @@ def absScanSequence(width,height,step_x,step_y,backToZero):
             #Set matching x value
             X_sequence.append(x)
             #Set matching Y value
-            if backToZero:
+            if kwargs["backToZero"]:
                 Y_sequence.append(y)
             else:
                 if x%2==0:
@@ -85,8 +85,8 @@ def toRelativeSequence(sequence):
     return {"x":X_rel,"y":Y_rel}
 
 
-def relScanSequence(width,height,step_x,step_y,backToZero):
-    return convertToAU(toRelativeSequence(absScanSequence(width,height,step_x,step_y,backToZero)),step_x,step_y)
+def relScanSequence(width,height,**kwargs):
+    return convertToAU(toRelativeSequence(absScanSequence(width,height,**kwargs)),kwargs["step_x"],kwargs["step_y"])
 
 
 #
@@ -109,4 +109,3 @@ def toAU(_func=None, *,unit_x,unit_y): #decorator with parameters. Assemble deco
         return decorator_toAU
     else:
         return decorator_toAU(_func)
-
