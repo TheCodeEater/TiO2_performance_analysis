@@ -5,13 +5,17 @@ import numpy as np
 import scipy as scp
 # Assign sequence position to x,y of point
 
-def getxy(linear_position):
-    x=linear_position // 8
+def getxy(linear_position,**kwargs):
+    #Assigning variables
+    X_max=kwargs["X_max"]
+    Y_max=kwargs["Y_max"]
 
-    r=linear_position % 16
+    x=linear_position // X_max
 
-    if 8<=r<=15:
-        y=7-(r%8)
+    r=linear_position % Y_max*2
+
+    if Y_max <=r <= Y_max*2-1:
+        y=Y_max-1-(r%Y_max)
     else:
         y=r
 

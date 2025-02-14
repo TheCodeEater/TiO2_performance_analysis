@@ -16,6 +16,8 @@ Y_points=8
 def LoadMatrixSize(f):
     @functools.wraps(f)
     def wrapper(*args, **kwargs):
+        kwargs["X_len"]=X_points
+        kwargs["Y_len"]=Y_points
         return f(*args, **kwargs)
 
     return wrapper
