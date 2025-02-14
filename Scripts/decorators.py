@@ -1,6 +1,12 @@
 import functools
 
 #
+# Config loader
+#
+
+#Load config here and set constants, to be later used by decorators
+
+#
 # Config decorators
 #
 
