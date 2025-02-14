@@ -7,6 +7,7 @@ import functools
 #Load config here and set constants, to be later used by decorators
 X_points=8
 Y_points=8
+backToZero=False
 
 #
 # Config decorators
@@ -18,6 +19,7 @@ def LoadMatrixSize(f):
     def wrapper(*args, **kwargs):
         kwargs["X_len"]=X_points
         kwargs["Y_len"]=Y_points
+        kwargs["backToZero"]=backToZero
         return f(*args, **kwargs)
 
     return wrapper
