@@ -5,7 +5,6 @@ from glob import glob
 import procedures as proc
 import re
 import scipy as sp
-from decorators import Smooth
 
 #Load data - Both light and dark
 #IV curve for each potential
@@ -13,6 +12,8 @@ dark_dataset = []
 light_dataset = []
 
 junk = []
+
+X_max,Y_max=proc.getXYMax()
 
 #Load light current density data
 for file in proc.get_sorted_filenames(c.FILEPATH_OCP_LIGHT):
@@ -25,34 +26,12 @@ for file in proc.get_sorted_filenames(c.FILEPATH_OCP_DARK):
     dark_dataset.append(voltage)
 
 #Compute differences
-@Smooth
-def deltaOCP(light_dataset,dark_dataset):
-    Z_matrix = proc.getBlankSampleMatrix() #get empty matrix for z data
+X,Y,Z=proc.deltaOCP(light_dataset,dark_dataset)
 
-    count = 0
-    for light,dark in zip(light_dataset,dark_dataset):
-        voltage_light=np.average(light[-10:])
-        voltage_dark=np.average(dark[-10:])
-
-        #Compute current density difference. this is the photocurrent
-        photovoltage=voltage_light-voltage_dark
-
-        #Arrange data in a matrix
-        pos=proc.getXY(count)
-        Z_matrix[pos]=photovoltage
-
-        count+=1
-
-    #Compute XY axis
-    X = np.arange(0, 8, 1)
-    Y = X
-    X, Y = np.meshgrid(X, Y)
-
-    return (X,Y,Z_matrix)
-
-#Compute smooth version
-
-X,Y,Z=deltaOCP(light_dataset,dark_dataset)
+#Compute smooth
+xnew, ynew = np.mgrid[0:X_max:200j, 0:Y_max - 1:200j]
+tck = sp.interpolate.bisplrep(X, Y, Z, s=10)
+znew = sp.interpolate.bisplev(xnew[:, 0], ynew[0, :], tck)
 
 #Create subplots
 fig,ax = plt.subplots(1,3,figsize=(20,5))
@@ -63,11 +42,11 @@ fig,ax = plt.subplots(1,3,figsize=(20,5))
 #cd_mat=np.transpose(cd_mat)
 
 pixel_plot=ax[0].imshow(
-  Z, cmap='gnuplot', interpolation='nearest',origin="lower")
+  np.transpose(Z), cmap='gnuplot', interpolation='nearest',origin="lower")
 
 # Draw 2d smoothed
 smooth_plot=ax[1].imshow(
-    Z, cmap='gnuplot', interpolation='nearest',origin="lower")
+    znew, cmap='gnuplot', interpolation='nearest',origin="lower")
 
 #Set scale formatted for smoothed
 ticks = np.linspace(0, 200, 8)
@@ -77,7 +56,7 @@ ax[1].set_yticks(ticks, np.arange(8))
 
 # Contour plot
 
-cont_plot = ax[2].contour(X,Y,np.transpose(Z), 80,cmap="gnuplot", antialiased=True)
+cont_plot = ax[2].contour(xnew,ynew,np.transpose(znew), 80,cmap="gnuplot", antialiased=True)
 
 plt.suptitle("OCP photovoltage map (average of last 10)")
 plt.colorbar(pixel_plot,label="V")
