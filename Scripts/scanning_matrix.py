@@ -1,3 +1,4 @@
+import functools
 """!
     Generate a 2D scanning matrix
     Returns a list of coordinates relative to a given origin (usually a corner of the surface to scan)
@@ -84,17 +85,26 @@ def toRelativeSequence(sequence):
 # DECORATORS
 #
 
-def _makeRelative(f):
+def makeRelative(f):
     def wrapper(*args,**kwargs):
-        return toRelativeSequence(f(args,kwargs))
+        return toRelativeSequence(f(*args,**kwargs))
     return wrapper
 
-def _toAU(unit_x,unit_y): #decorator with parameters. Assemble decorator with fixed par and return
+def toAU(_func=None, *,unit_x,unit_y): #decorator with parameters. Assemble decorator with fixed par and return
     def decorator_toAU(f):
+        @functools.wraps(f)
         def wrapper(*args,**kwargs):
-            return convertToAU(f(args,kwargs),unit_x,unit_y)
+            return convertToAU(f(*args,**kwargs),unit_x,unit_y)
 
-    return decorator_toAU()
+        return wrapper
+    if _func is None:
+        return decorator_toAU
+    else:
+        return decorator_toAU(_func)
 
+@makeRelative
+@toAU(unit_x=5,unit_y=5)
+def relativeSequence(*args):
+    return scanSequence(*args)
 
-
+print(relativeSequence(60,60,5,5,True))
