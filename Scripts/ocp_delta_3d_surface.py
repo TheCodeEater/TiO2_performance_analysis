@@ -33,20 +33,11 @@ for file in proc.get_sorted_filenames(c.FILEPATH_OCP_DARK):
 count=0
 cd_mat = np.zeros((8,8))
 
-for light,dark in zip(light_dataset,dark_dataset):
-    voltage_light=np.average(light[-10:0])
-    voltage_dark=np.average(dark[-10:0])
+X,Y,cd_mat=proc.deltaAverageOCP(light_dataset,dark_dataset)
 
-    #Compute current density difference. this is the photocurrent
-    photovoltage=voltage_light-voltage_dark
-
-    #Arrange data in a matrix
-    pos=proc.getXY(count)
-    cd_mat[pos]=photovoltage
-
-    count+=1
 
 cd_mat=np.transpose(cd_mat) # Fix orientation of matrix
+Z=cd_mat
 #Reflect
 
 # Assign colors based on value (interpolation between maximum and minimum hue, fixed brightness and saturation)
@@ -54,10 +45,6 @@ cd_mat=np.transpose(cd_mat) # Fix orientation of matrix
 fig, ax = plt.subplots(1,2,subplot_kw={"projection": "3d"},figsize=(10,6))
 plots=ax.flatten()
 
-X=np.arange(0,8,1)
-Y=X
-X, Y = np.meshgrid(X, Y)
-Z=cd_mat
 
 #Smooth the dataset
 #interpolate the matrix along a finer lattice
