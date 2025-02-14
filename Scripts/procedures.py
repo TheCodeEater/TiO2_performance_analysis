@@ -3,7 +3,7 @@ import re
 from glob import glob
 import numpy as np
 import scipy as scp
-from decorators import LoadMatrixSize
+from decorators import LoadMatrixSize, Smooth
 
 # Assign sequence position to x,y of point
 @LoadMatrixSize
@@ -62,6 +62,32 @@ def getXYMax(**kwargs):
 
 def current_time():
     return time.strftime("%Y%m%d-%H%M%S")
+
+#@Smooth
+def deltaOCP(light_dataset,dark_dataset):
+    Z_matrix = getBlankSampleMatrix() #get empty matrix for z data
+
+    count = 0
+    for light,dark in zip(light_dataset,dark_dataset):
+        voltage_light=np.average(light[-10:])
+        voltage_dark=np.average(dark[-10:])
+
+        #Compute current density difference. this is the photocurrent
+        photovoltage=voltage_light-voltage_dark
+
+        #Arrange data in a matrix
+        pos=getXY(count)
+        Z_matrix[pos]=photovoltage
+
+        count+=1
+
+    #Compute XY axis
+    X = np.arange(0, 8, 1)
+    Y = X
+    X, Y = np.meshgrid(X, Y)
+
+    return (X,Y,Z_matrix)
+
 
 def get_file_number(file):
     # For each file, match position and put in the list
