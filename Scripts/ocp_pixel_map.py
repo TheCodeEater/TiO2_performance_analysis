@@ -36,7 +36,7 @@ for light,dark in zip(light_dataset,dark_dataset):
     photovoltage=voltage_light-voltage_dark
 
     #Arrange data in a matrix
-    pos=proc.getxy(count)
+    pos=proc.getXY(count)
     cd_mat[pos]=photovoltage
 
     count+=1

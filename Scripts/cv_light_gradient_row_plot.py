@@ -32,7 +32,7 @@ for row_index in range(0,8): #for each row
     row=[]
     # Get the row as a linear array, picking all x value (column) for fixed y (row)
     for col_index in range(0,8):
-        linear_pos=proc.getlinearpos(col_index,row_index)
+        linear_pos=proc.getLinearPosition(col_index, row_index)
         row.append(data_base[linear_pos]) #pick all values on the same row but different columns
 
     #plot

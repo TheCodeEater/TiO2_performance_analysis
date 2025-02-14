@@ -7,7 +7,7 @@ from decorators import LoadMatrixSize
 
 # Assign sequence position to x,y of point
 @LoadMatrixSize
-def getxy(linear_position,**kwargs):
+def getXY(linear_position, **kwargs):
     #Assigning variables
     X_max=kwargs["X_max"]
     Y_max=kwargs["Y_max"]
@@ -33,7 +33,7 @@ def getxy(linear_position,**kwargs):
         return (x,y)
 
 @LoadMatrixSize
-def getlinearpos(x,y,**kwargs):
+def getLinearPosition(x, y, **kwargs):
     #ensure the range is ok
     assert(x<=kwargs["X_max"])
     assert(y<=kwargs["Y_max"])

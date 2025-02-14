@@ -25,7 +25,7 @@ for file in proc.get_sorted_filenames(c.FILEPATH_CV_LIGHT):
 linear_pos=0
 for set in data_base:
     #convert linear position to coordinates
-    x,y=proc.getxy(linear_pos)
+    x,y=proc.getXY(linear_pos)
     #use y coord to find color
     plt.plot(set["x"],set["y"],color=c.colors[y],ls="dotted")#,label="Riga {}".format(r+1))
 

@@ -11,7 +11,7 @@ print("Type the xy coordinates of the point to examine")
 x_pos=int(input("X:\n"))
 y_pos=int(input("Y:\n"))
 
-linear_pos=proc.getlinearpos(x_pos,y_pos)
+linear_pos=proc.getLinearPosition(x_pos, y_pos)
 print(linear_pos)
 
 data_base = []

@@ -27,7 +27,7 @@ cd_mat = np.zeros((8,8))
 
 for value in resistances:
     #Arrange data in a matrix
-    pos=proc.getxy(count)
+    pos=proc.getXY(count)
     cd_mat[pos]=value
 
     count+=1
