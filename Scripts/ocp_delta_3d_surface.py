@@ -48,14 +48,7 @@ plots=ax.flatten()
 
 #Smooth the dataset
 #interpolate the matrix along a finer lattice
-if doSmooth:
-    xnew, ynew = np.mgrid[0:7:200j, 0:7:200j]
-    tck = sp.interpolate.bisplrep(X, Y, Z, s=10)
-    znew = sp.interpolate.bisplev(xnew[:,0], ynew[0,:], tck)
-
-    X=xnew
-    Y=ynew
-    Z=znew
+X,Y,Z=proc.smoothMatrix(X,Y,Z)
 
 #Plot surface
 
