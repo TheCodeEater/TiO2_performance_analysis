@@ -26,7 +26,7 @@ for file in proc.get_sorted_filenames(c.FILEPATH_OCP_DARK):
     dark_dataset.append(voltage)
 
 #Compute differences
-X,Y,Z=proc.deltaOCP(light_dataset,dark_dataset)
+X,Y,Z=proc.deltaAverageOCP(light_dataset,dark_dataset)
 
 #Compute smooth
 xnew, ynew, znew = proc.smoothMatrix(X,Y,Z)

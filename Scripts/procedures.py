@@ -64,7 +64,7 @@ def current_time():
     return time.strftime("%Y%m%d-%H%M%S")
 
 #@Smooth
-def deltaOCP(light_dataset,dark_dataset):
+def deltaAverageOCP(light_dataset,dark_dataset):
     Z_matrix = getBlankSampleMatrix() #get empty matrix for z data
 
     count = 0
