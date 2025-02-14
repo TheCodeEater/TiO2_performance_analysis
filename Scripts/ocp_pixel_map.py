@@ -5,6 +5,7 @@ from glob import glob
 import procedures as proc
 import re
 import scipy as sp
+from decorators import Smooth
 
 #Load data - Both light and dark
 #IV curve for each potential
@@ -24,7 +25,7 @@ for file in proc.get_sorted_filenames(c.FILEPATH_OCP_DARK):
     dark_dataset.append(voltage)
 
 #Compute differences
-
+@Smooth
 def deltaOCP(light_dataset,dark_dataset):
     Z_matrix = proc.getBlankSampleMatrix() #get empty matrix for z data
 
@@ -53,18 +54,6 @@ def deltaOCP(light_dataset,dark_dataset):
 
 X,Y,Z=deltaOCP(light_dataset,dark_dataset)
 
-#Smooth the dataset
-#interpolate the matrix along a finer lattice
-xnew, ynew = np.mgrid[0:7:200j, 0:7:200j]
-tck = sp.interpolate.bisplrep(X, Y, Z, s=10)
-znew = sp.interpolate.bisplev(xnew[:,0], ynew[0,:], tck)
-
-X=xnew
-Y=ynew
-Z=znew
-
-cd_mat=Z
-
 #Create subplots
 fig,ax = plt.subplots(1,3,figsize=(20,5))
 
@@ -74,7 +63,7 @@ fig,ax = plt.subplots(1,3,figsize=(20,5))
 #cd_mat=np.transpose(cd_mat)
 
 pixel_plot=ax[0].imshow(
-  cd_mat, cmap='gnuplot', interpolation='nearest',origin="lower")
+  Z, cmap='gnuplot', interpolation='nearest',origin="lower")
 
 # Draw 2d smoothed
 smooth_plot=ax[1].imshow(
