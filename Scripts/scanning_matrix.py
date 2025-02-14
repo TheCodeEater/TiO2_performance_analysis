@@ -17,7 +17,7 @@
     Use absolute coordinates
     
 """
-def absScanSequence(width,height,step_x,step_y,backToZero):
+def scanSequence(width,height,step_x,step_y,backToZero):
     #Convert the parameters in terms of the discrete X,Y matrix
     #using units of step
     X_min=0
@@ -81,4 +81,4 @@ def toRelativeSequence(sequence):
 
 
 
-print(toRelativeSequence(absScanSequence(8,8,1,1,False)))
+print(toRelativeSequence(scanSequence(8,8,1,1,False)))
