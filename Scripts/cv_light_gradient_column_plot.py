@@ -5,6 +5,7 @@ import time
 import constants as c
 import procedures as proc
 import scipy as sp
+from decorators import LoadMatrixSize
 
 data_base = []
 data_normalized = []
@@ -25,26 +26,35 @@ for file in proc.get_sorted_filenames(c.FILEPATH_CV_LIGHT):
 figure, ax = plt.subplots(nrows=2,ncols=4,figsize=(30,15)) #Plot data along cols (contains 8 plots, one for each row of the col assigned to the plot)
 plots=ax.flatten()
 
+@LoadMatrixSize
+def generatePlots(dataset,**kwargs):
+    #Create convenient variables
+    X_max=kwargs["X_max"]
+    Y_max=kwargs["Y_max"]
 
-# Plot for each column
-for col in range(0,8): #for each column
-    #Get column as linear array
-    column=data_base[col*8:(col+1)*8]#excludes last element, which is part of the next column (or out of bound if last col)
-    #Reverse row if parity is odd (first column is 0)
-    if col%2==1:
-        column=reversed(column)
+    # Plot for each column
+    for column_index in range(0,X_max): #for each column
+        #Get column as linear array
+        column=dataset[column_index*X_max:(column_index+1)*X_max]#excludes last element, which is part of the next column (or out of bound if last col)
 
-    row_count=0
-    for row in column: #for each row, plot according to colors
-        plots[col].plot(row["x"],row["y"],color=c.colors[row_count],label="Row {}".format(row_count+1))
-        row_count+=1
+        #check if we are going back to the start or do a snake like route
+        if kwargs["backToZero"]==False:
+        #Reverse row if parity is odd (first column is 0)
+            if column_index%2==1:
+                column=reversed(column)
 
-    #Set labels and title
-    plots[col].set(xlabel="Potential (V)", ylabel="Current (A)",
-                   title="Column {}".format(col + 1),
+        row_index=0
+        for row in column: #for each row, plot according to colors
+            plots[column_index].plot(row["x"],row["y"],color=c.colors[row_index],label="Row {}".format(row_index+1))
+            row_index+=1
+
+        #Set labels and title
+        plots[column_index].set(xlabel="Potential (V)", ylabel="Current (A)",
+                   title="Column {}".format(column_index + 1),
                    xlim=c.CRG_XLIM,ylim=c.CRG_YLIM)
-    plots[col].legend()
+        plots[column_index].legend()
 
+generatePlots(data_base)
 
 #Drawing
 plt.legend()
