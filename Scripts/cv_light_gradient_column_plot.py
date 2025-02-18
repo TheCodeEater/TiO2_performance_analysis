@@ -27,7 +27,7 @@ figure, ax = plt.subplots(nrows=2,ncols=4,figsize=(30,15)) #Plot data along cols
 plots=ax.flatten()
 
 @LoadMatrixSize
-def generatePlots(dataset,**kwargs):
+def generatePlots(dataset,plot_list,**kwargs):
     #Create convenient variables
     X_max=kwargs["X_max"]
     Y_max=kwargs["Y_max"]
@@ -49,15 +49,15 @@ def generatePlots(dataset,**kwargs):
 
         row_index=0
         for row in column: #for each row, plot according to colors
-            plots[column_index].plot(row["x"],row["y"],color=c.colors[row_index],label="Row {}".format(row_index+1))
+            plot_list[column_index].plot(row["x"],row["y"],color=c.colors[row_index],label="Row {}".format(row_index+1))
             row_index+=1
 
         #Set labels and title
-        plots[column_index].set(**kwargs,
+        plot_list[column_index].set(**kwargs,
                    title="Column {}".format(column_index + 1))
-        plots[column_index].legend()
+        plot_list[column_index].legend()
 
-generatePlots(data_base,xlabel="Potential (V)", ylabel="Current (A)",xlim=c.CRG_XLIM,ylim=c.CRG_YLIM)
+generatePlots(data_base,plots,xlabel="Potential (V)", ylabel="Current (A)",xlim=c.CRG_XLIM,ylim=c.CRG_YLIM)
 
 #Drawing
 plt.legend()
