@@ -31,6 +31,10 @@ def generatePlots(dataset,**kwargs):
     #Create convenient variables
     X_max=kwargs["X_max"]
     Y_max=kwargs["Y_max"]
+    backToZero=kwargs["backToZero"]
+    del kwargs["X_max"]
+    del kwargs["Y_max"]
+    del kwargs["backToZero"]
 
     # Plot for each column
     for column_index in range(0,X_max): #for each column
@@ -38,7 +42,7 @@ def generatePlots(dataset,**kwargs):
         column=dataset[column_index*X_max:(column_index+1)*X_max]#excludes last element, which is part of the next column (or out of bound if last col)
 
         #check if we are going back to the start or do a snake like route
-        if kwargs["backToZero"]==False:
+        if backToZero==False:
         #Reverse row if parity is odd (first column is 0)
             if column_index%2==1:
                 column=reversed(column)
