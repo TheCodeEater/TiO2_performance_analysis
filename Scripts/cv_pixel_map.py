@@ -62,7 +62,7 @@ for light,dark in zip(light_dataset,dark_dataset):
     #Arrange data in a matrix
     pos=proc.getXY(count)
     cd_mat[pos]=photocurrent
-    print("({},{})\n->Light: {}\n->Dark: {}\n->Delta: {}\nPoint: {}\n----".format(pos[0],pos[1],current_light,current_dark,photocurrent,count))
+    #print("({},{})\n->Light: {}\n->Dark: {}\n->Delta: {}\nPoint: {}\n----".format(pos[0],pos[1],current_light,current_dark,photocurrent,count))
 
     count+=1
 
