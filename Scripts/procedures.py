@@ -4,6 +4,7 @@ from glob import glob
 import numpy as np
 import scipy as sp
 from decorators import LoadMatrixSize, Smooth
+import constants as c
 
 # Assign sequence position to x,y of point
 @LoadMatrixSize
@@ -87,6 +88,37 @@ def deltaAverageOCP(light_dataset,dark_dataset):
     X, Y = np.meshgrid(X, Y)
 
     return (X,Y,Z_matrix)
+
+@LoadMatrixSize
+def generatePlots(dataset,plot_list,**kwargs):
+    #Create convenient variables
+    X_max=kwargs["X_max"]
+    Y_max=kwargs["Y_max"]
+    backToZero=kwargs["backToZero"]
+    del kwargs["X_max"]
+    del kwargs["Y_max"]
+    del kwargs["backToZero"]
+
+    # Plot for each column
+    for column_index in range(0,X_max): #for each column
+        #Get column as linear array
+        column=dataset[column_index*X_max:(column_index+1)*X_max]#excludes last element, which is part of the next column (or out of bound if last col)
+
+        #check if we are going back to the start or do a snake like route
+        if backToZero==False:
+        #Reverse row if parity is odd (first column is 0)
+            if column_index%2==1:
+                column=reversed(column)
+
+        row_index=0
+        for row in column: #for each row, plot according to colors
+            plot_list[column_index].plot(row["x"],row["y"],color=c.colors[row_index],label="Row {}".format(row_index+1))
+            row_index+=1
+
+        #Set labels and title
+        plot_list[column_index].set(**kwargs,
+                   title="Column {}".format(column_index + 1))
+        plot_list[column_index].legend()
 
 def smoothMatrix(X,Y,Z,finesseX=200j,finesseY=200j,s_factor=10):
     X_max,Y_max=getXYMax()
