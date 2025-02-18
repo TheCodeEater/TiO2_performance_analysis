@@ -53,12 +53,11 @@ def generatePlots(dataset,**kwargs):
             row_index+=1
 
         #Set labels and title
-        plots[column_index].set(xlabel="Potential (V)", ylabel="Current (A)",
-                   title="Column {}".format(column_index + 1),
-                   xlim=c.CRG_XLIM,ylim=c.CRG_YLIM)
+        plots[column_index].set(xlabel="Potential (V)", ylabel="Current (A)",xlim=c.CRG_XLIM,ylim=c.CRG_YLIM,
+                   title="Column {}".format(column_index + 1))
         plots[column_index].legend()
 
-generatePlots(data_base)
+generatePlots(data_base,xlabel="Potential (V)", ylabel="Current (A)",xlim=c.CRG_XLIM,ylim=c.CRG_YLIM)
 
 #Drawing
 plt.legend()
