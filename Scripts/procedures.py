@@ -90,7 +90,7 @@ def deltaAverageOCP(light_dataset,dark_dataset):
     return (X,Y,Z_matrix)
 
 @LoadMatrixSize
-def generatePlots(dataset,plot_list,**kwargs):
+def populateColumnPlots(dataset,plot_list,**kwargs):
     #Create convenient variables
     X_max=kwargs["X_max"]
     Y_max=kwargs["Y_max"]

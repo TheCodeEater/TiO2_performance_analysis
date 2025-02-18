@@ -26,7 +26,7 @@ for file in proc.get_sorted_filenames(c.FILEPATH_CV_LIGHT):
 figure, ax = plt.subplots(nrows=2,ncols=4,figsize=(30,15)) #Plot data along cols (contains 8 plots, one for each row of the col assigned to the plot)
 plots=ax.flatten()
 
-proc.generatePlots(data_base,plots,xlabel="Potential (V)", ylabel="Current (A)",xlim=c.CRG_XLIM,ylim=c.CRG_YLIM)
+proc.populateColumnPlots(data_base,plots,xlabel="Potential (V)", ylabel="Current (A)",xlim=c.CRG_XLIM,ylim=c.CRG_YLIM)
 
 #Drawing
 plt.legend()
